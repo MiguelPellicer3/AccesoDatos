@@ -2,5 +2,7 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/Users/DAMDUALAlu7/Desktop/XStream/kxml2-min-2.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/DAMDUALAlu7/Desktop/XStream/xstream-1.4.19.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

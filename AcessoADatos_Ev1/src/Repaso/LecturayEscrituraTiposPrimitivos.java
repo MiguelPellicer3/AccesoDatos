@@ -10,7 +10,7 @@ import java.io.IOException;
 public class LecturayEscrituraTiposPrimitivos {
 
 	public static void main(String[] args) {
-		File fichero= new File("C:\\users\\DAMDUALAlu7\\fichero1.txt");
+		File fichero= new File("Directorio\\ficheroPersonas.dat");
 		try {
 			FileOutputStream fos = new FileOutputStream(fichero);
 			FileInputStream fis= new FileInputStream(fichero);
