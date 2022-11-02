@@ -4,10 +4,11 @@ import java.io.Serializable;
 
 public class Persona implements Serializable {
 
+	private static final long serialVersionUID = 8739192683609421247L;
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	
 	private String Nombre;
 	private int Edad;
 	public Persona() {
