@@ -1,4 +1,4 @@
-package Xml;
+package XmlXStream;
 
 
 import java.io.File;

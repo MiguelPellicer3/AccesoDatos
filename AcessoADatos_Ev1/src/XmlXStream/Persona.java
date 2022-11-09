@@ -1,13 +1,18 @@
-package Repaso;
+package XmlXStream;
 
 import java.io.Serializable;
 
 public class Persona implements Serializable {
 
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7987678009567060707L;
+	/**
+	 * 
+	 */
+	
 	private String Nombre;
 	private int Edad;
 	public Persona() {

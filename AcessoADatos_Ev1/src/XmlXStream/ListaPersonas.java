@@ -1,4 +1,4 @@
-package XStream;
+package XmlXStream;
 
 import java.util.ArrayList;
 

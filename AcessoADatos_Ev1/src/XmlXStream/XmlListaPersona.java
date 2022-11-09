@@ -1,4 +1,4 @@
-package XStream;
+package XmlXStream;
 
 import java.io.EOFException;
 import java.io.File;
@@ -7,13 +7,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-
 import com.thoughtworks.xstream.XStream;
+import XmlXStream.Persona;
 
 public class XmlListaPersona {
 
 	public static void main(String[] args) {
-		File f= new File("Directorio\\ficheroPersonas.dat");
+		File f= new File("Directorio\\fichero3.dat");
 		try {
 			FileInputStream fis= new FileInputStream(f);
 			ObjectInputStream ois= new ObjectInputStream(fis);
@@ -27,11 +27,12 @@ public class XmlListaPersona {
 			}catch(EOFException eof) {
 				ois.close();
 			}
+			
 			XStream xstream= new XStream();
 			xstream.alias("ListaDePersonas",ListaPersonas.class);
 			xstream.alias("DatosPersona", Persona.class);
 			xstream.addImplicitCollection(ListaPersonas.class,"lista");
-			xstream.toXML(lista.getLista(),new FileOutputStream("Directorio\\Personas.xml"));			
+			xstream.toXML(lista.getLista(),new FileOutputStream("Personas.xml"));			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

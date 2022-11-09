@@ -1,4 +1,4 @@
-package Xml;
+package XmlXStream;
 
 //Miguel Pellicer Cerezuela 13/10/2022
 
