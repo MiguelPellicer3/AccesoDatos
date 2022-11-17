@@ -3,5 +3,23 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.47.jar"/>
+	<classpathentry kind="lib" path="lib/libReports/bcprov-jdk15on-1.70.jar"/>
+	<classpathentry kind="lib" path="lib/libReports/bcutil-jdk15on-1.70.jar"/>
+	<classpathentry kind="lib" path="lib/libReports/commons-beanutils-1.9.4.jar"/>
+	<classpathentry kind="lib" path="lib/libReports/commons-collections-3.2.2.jar"/>
+	<classpathentry kind="lib" path="lib/libReports/commons-collections4-4.2.jar"/>
+	<classpathentry kind="lib" path="lib/libReports/commons-digester-2.1.jar"/>
+	<classpathentry kind="lib" path="lib/libReports/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/libReports/ecj-3.21.0.jar"/>
+	<classpathentry kind="lib" path="lib/libReports/itext-2.1.7.js10.jar"/>
+	<classpathentry kind="lib" path="lib/libReports/jackson-annotations-2.13.3.jar"/>
+	<classpathentry kind="lib" path="lib/libReports/jackson-core-2.13.3.jar"/>
+	<classpathentry kind="lib" path="lib/libReports/jackson-databind-2.13.3.jar"/>
+	<classpathentry kind="lib" path="lib/libReports/jackson-dataformat-xml-2.13.3.jar"/>
+	<classpathentry kind="lib" path="lib/libReports/jasperreports-6.20.0.jar"/>
+	<classpathentry kind="lib" path="lib/libReports/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="lib/libReports/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="lib" path="lib/libReports/stax2-api-4.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/libReports/woodstox-core-6.2.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
