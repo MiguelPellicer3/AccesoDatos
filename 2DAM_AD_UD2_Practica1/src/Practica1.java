@@ -14,7 +14,7 @@ public class Practica1 {
 		String[] opcionesPrincipales= {"1.Gestión empleados","2.Gestión Departamentos"};
 		String[] opcionesEmpleado= {"1.Insertar Empleado","2.Modificar Empleado","3.Borrar Empleado","4.Lista todos los empleados",
 				"5.Listar todos los empleados de un departamento","6.Consultar empleados por nif/dni","7.Consultar empleados que tengan un salario superior al introducido por el usuario"
-				,"8.Consultar empleados que tengan un salario igual o inferior al introducido porel usuario"};
+				,"8.Consultar empleados que tengan un salario igual o inferior al introducido por el usuario"};
 		String[] opcionesDepartamento= {"1.Insertar Departamento","2.Modificar Derpatamento","3.Eliminar Departamento","4.Listado Departamentos",
 				"5.Seleccionar Departamento por ID","6.Seleccionar Departamento por Nombre"};
 		
@@ -105,7 +105,7 @@ public class Practica1 {
 		s.close();
 	}
 	
-	
+	//Funciona
 	public static void InsertarEmpleado(Connection c) {
 		Empleado e= new Empleado();
 		Scanner s= new Scanner(System.in);
@@ -133,11 +133,13 @@ public class Practica1 {
 		}
 		s.close();
 	}
+	//Funciona
 	public static void ModificarEmpleado(Connection c) {
+		ListarEmpleados(c);
 		Empleado e= new Empleado();
 		Scanner s= new Scanner(System.in);
-		System.out.println("Introduce el nombre del empleado a modificar");
-		String nombre= s.next();
+		System.out.println("Introduce el id del empleado a modificar");
+		int id= s.nextInt();
 		System.out.println("Introduce los datos del empleado");
 		System.out.println("Nombre:");
 		e.setNombre(s.next());
@@ -148,29 +150,24 @@ public class Practica1 {
 		System.out.println("Codigo Departamento:");
 		e.setDpto(s.nextInt());
 		try {
-			PreparedStatement ps1= c.prepareStatement("select id from empleados where nombre = ? ");
-			ps1.setString(1,nombre);
-			ResultSet rs= ps1.executeQuery();
-			if(rs.next()) {
-				int id = rs.getInt(1);
-				String sql="UPDATE empleados set nombre=?, nif=?, salario=?, dpto=? where nombre = ?";
+				String sql="UPDATE empleados set nombre=?, nif=?, salario=?, dpto=? where id = ?";
 				PreparedStatement ps = c.prepareStatement(sql);
 				ps.setString(1, e.getNombre());
 				ps.setString(2, e.getNif());
 				ps.setDouble(3, e.getSalario());
 				ps.setInt(4, e.getDpto());
 				ps.setInt(5, id);
-				int consulta=ps.executeUpdate();
-				System.out.println(consulta+" "+e);
+				ps.executeUpdate();
+				System.out.println(e);
 				ps.close();
-			}
-			ps1.close();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
 		s.close();
 	}
+	//Funciona
 	public static void BorrarEmpleado(Connection c) {
+		ListarEmpleados(c);
 		Scanner s= new Scanner(System.in);
 		System.out.println("Introduce el id que quieres eliminar");
 		int id= s.nextInt();
@@ -189,6 +186,7 @@ public class Practica1 {
 		}
 		s.close();
 	}
+	//Funciona
 	public static void ListarEmpleados(Connection c) {
 		try {
 			Empleado e=new Empleado();
@@ -206,6 +204,7 @@ public class Practica1 {
 			e.printStackTrace();
 		}
 	}
+	//Funciona
 	public static void ListarEmpleadosDepartamento(Connection c) {
 		Scanner s= new Scanner(System.in);
 		System.out.println("Introduce el id de depatamento");
@@ -228,6 +227,7 @@ public class Practica1 {
 		}
 		s.close();
 	}
+	//Funciona
 	public static void EmpleadoNif(Connection c) {
 		Empleado e= new Empleado();
 		Scanner s= new Scanner(System.in);
@@ -235,10 +235,10 @@ public class Practica1 {
 		String dni= s.next();
 		
 		try {
-			PreparedStatement ps1= c.prepareStatement("select id from empleados where nif = ? ");
+			PreparedStatement ps1= c.prepareStatement("select * from empleados where nif = ? ");
 			ps1.setString(1,dni);
 			ResultSet rs= ps1.executeQuery();
-			if(rs.next()) {
+			while(rs.next()) {
 				e.setID(rs.getInt(1));
 				e.setNombre(rs.getString(2));
 				e.setNif( rs.getString(3));
@@ -252,14 +252,16 @@ public class Practica1 {
 		}
 		s.close();
 	}
+	//Funciona
 	public static void ListaEmpleadosSueldoSuperior(Connection c) {
-		System.out.println("Introduce el sueldo");
+		System.out.println("Introduce el sueldo (Introduce , para indicar los decimales)");
 		Scanner scan= new Scanner(System.in);
-		scan.nextDouble();
+		double d=scan.nextDouble();
 		try {
 			Empleado e=new Empleado();
-			Statement s = c.createStatement();
-			ResultSet resultado= s.executeQuery("SELECT * FROM empleados WHERE sueldo > ?");
+			PreparedStatement s = c.prepareStatement("SELECT * FROM empleados WHERE salario > ?");
+			s.setDouble(1, d);
+			ResultSet resultado= s.executeQuery();
 			while(resultado.next()) {
 				e.setID(resultado.getInt(1));
 				e.setNombre(resultado.getString(2));
@@ -274,14 +276,16 @@ public class Practica1 {
 		}
 		scan.close();
 	}
+	//Funciona
 	public static void ListaEmpleadosSueldoInferior(Connection c) {
-		System.out.println("Introduce el sueldo");
+		System.out.println("Introduce el sueldo (Introduce , para indicar los decimales)");
 		Scanner scan= new Scanner(System.in);
-		scan.nextDouble();
+		double d=scan.nextDouble();
 		try {
 			Empleado e=new Empleado();
-			Statement s = c.createStatement();
-			ResultSet resultado= s.executeQuery("SELECT * FROM empleados WHERE sueldo < ?");
+			PreparedStatement s = c.prepareStatement("SELECT * FROM empleados WHERE salario < ?");
+			s.setDouble(1, d);
+			ResultSet resultado= s.executeQuery();
 			while(resultado.next()) {
 				e.setID(resultado.getInt(1));
 				e.setNombre(resultado.getString(2));
@@ -296,6 +300,7 @@ public class Practica1 {
 		}
 		scan.close();
 	}
+	//Funciona
 	public static void InsertarDepartamento(Connection c) {
 		Departamento d= new Departamento();
 		Scanner s= new Scanner(System.in);
@@ -314,10 +319,12 @@ public class Practica1 {
 		}
 		s.close();
 	}
+	//Funciona
 	public static void ModificarDepartamento(Connection c) {
 		Departamento d= new Departamento();
 		Scanner s= new Scanner(System.in);
-		System.out.println("Introduce el nombre del departamento que quieres modificar");
+		ListaDepartamentos(c);
+		System.out.println("Introduce el nombre del departamentos que quieres modificar");
 		d.setNombre(s.next());
 		System.out.println("Introduce el nuevo nombre:");
 		String nombre = s.next();
@@ -327,13 +334,14 @@ public class Practica1 {
 			ps.setString(1, nombre);
 			ps.setString(2, d.getNombre());
 			ps.execute();
-			System.out.println(d);
+			System.out.println(nombre+ " es el nuevo nombre del departamento "+ d.getNombre());
 			ps.close();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
 		s.close();
 	}
+	//Funciona
 	public static void EliminarDepartamento(Connection c) {
 		Departamento d= new Departamento();
 		Scanner s= new Scanner(System.in);
@@ -341,7 +349,7 @@ public class Practica1 {
 		System.out.println("Nombre:");
 		d.setNombre(s.next());
 		try {
-			String sql="DELETE from departamento where nombre = ?";
+			String sql="DELETE from departamentos where nombre = ?";
 			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setString(1, d.getNombre());
 			ps.execute();
@@ -352,6 +360,7 @@ public class Practica1 {
 		}
 		s.close();
 	}
+	//Funciona
 	public static void ListaDepartamentos(Connection c) {
 		try {
 			Departamento d=new Departamento();
@@ -366,6 +375,7 @@ public class Practica1 {
 			e.printStackTrace();
 		}
 	}
+	//Funciona
 	public static void DepartamentoID(Connection c) {
 		Departamento d= new Departamento();
 		Scanner s= new Scanner(System.in);
@@ -387,6 +397,7 @@ public class Practica1 {
 		}
 		s.close();
 	}
+	//Funciona
 	public static void DepartamentoNombre(Connection c) {
 		Departamento d= new Departamento();
 		Scanner s= new Scanner(System.in);
