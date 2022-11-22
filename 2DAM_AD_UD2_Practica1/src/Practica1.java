@@ -3,7 +3,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 
 public class Practica1 {
@@ -11,7 +21,7 @@ public class Practica1 {
 	public static void main(String[] args) {
 		
 		Connection c= Conexion.conectar();
-		String[] opcionesPrincipales= {"1.Gestión empleados","2.Gestión Departamentos"};
+		String[] opcionesPrincipales= {"1.Gestión empleados","2.Gestión Departamentos","3.Reporte"};
 		String[] opcionesEmpleado= {"1.Insertar Empleado","2.Modificar Empleado","3.Borrar Empleado","4.Lista todos los empleados",
 				"5.Listar todos los empleados de un departamento","6.Consultar empleados por nif/dni","7.Consultar empleados que tengan un salario superior al introducido por el usuario"
 				,"8.Consultar empleados que tengan un salario igual o inferior al introducido por el usuario"};
@@ -95,6 +105,9 @@ public class Practica1 {
 				System.out.println("Has salido");
 				System.exit(0);
 			}		
+		}else if(n==3)
+		{
+			Impreso(c);
 		}
 		
 		try {
@@ -420,5 +433,24 @@ public class Practica1 {
 		s.close();
 	}
 	
-	
+	public static void Impreso(Connection c) {
+        Map<String, Object> misParams = new HashMap<String, Object>();
+        Scanner scan= new Scanner(System.in);
+        System.out.println("Introduce el id del departamento para realizar el reporte.");
+        int dep= scan.nextInt();
+        misParams.put("idDep", dep );
+        String reportResouce = "./report/Listado.jrxml";
+        String reportPDF = "./report/Listado.pdf";
+        JasperReport miReport;
+        scan.close();
+        try {
+            miReport = JasperCompileManager.compileReport(reportResouce);
+            JasperPrint miImpreso = JasperFillManager.fillReport(miReport, misParams, c);
+            JasperViewer.viewReport(miImpreso, false);
+            JasperExportManager.exportReportToPdfFile(miImpreso, reportPDF);
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+    
+	}
 }
