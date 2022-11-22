@@ -434,18 +434,18 @@ public class Practica1 {
 	}
 	
 	public static void Impreso(Connection c) {
-        Map<String, Object> misParams = new HashMap<String, Object>();
+        Map<String, Object> parametro = new HashMap<String, Object>();
         Scanner scan= new Scanner(System.in);
         System.out.println("Introduce el id del departamento para realizar el reporte.");
         int dep= scan.nextInt();
-        misParams.put("idDep", dep );
+        parametro.put("idDep", dep );
         String reportResouce = "./report/Listado.jrxml";
         String reportPDF = "./report/Listado.pdf";
         JasperReport miReport;
         scan.close();
         try {
             miReport = JasperCompileManager.compileReport(reportResouce);
-            JasperPrint miImpreso = JasperFillManager.fillReport(miReport, misParams, c);
+            JasperPrint miImpreso = JasperFillManager.fillReport(miReport, parametro, c);
             JasperViewer.viewReport(miImpreso, false);
             JasperExportManager.exportReportToPdfFile(miImpreso, reportPDF);
         } catch (JRException e) {
