@@ -1,8 +1,6 @@
 package vista;
 
 import java.awt.EventQueue;
-import java.awt.Frame;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -15,6 +13,10 @@ import javax.swing.ImageIcon;
 
 public class PresentacionFrame extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 
 	/**
@@ -86,7 +88,7 @@ public class PresentacionFrame extends JFrame {
 		contentPane.add(Presentación);
 		
 		JLabel imagen = new JLabel("");
-		imagen.setIcon(new ImageIcon("C:\\Users\\DAMDUALAlu7\\eclipse-workspace\\Practica_NBA\\img\\logo.png"));
+		imagen.setIcon(new ImageIcon("C:\\Users\\DAMDUALAlu7\\git\\AccesoDatos\\Practica_NBA\\img\\logo.png"));
 		imagen.setBounds(203, 0, 399, 492);
 		contentPane.add(imagen);
 	}

@@ -92,4 +92,13 @@ public class Equipo implements java.io.Serializable {
 		this.partidosesForEquipoLocal = partidosesForEquipoLocal;
 	}
 
+	@Override
+	public String toString() {
+		return "Equipo [nombre=" + nombre + ", ciudad=" + ciudad + ", conferencia=" + conferencia + ", division="
+				+ division + ", jugadors=" + jugadors + ", partidosesForEquipoVisitante=" + partidosesForEquipoVisitante
+				+ ", partidosesForEquipoLocal=" + partidosesForEquipoLocal + "]";
+	}
+	
+	
+
 }
