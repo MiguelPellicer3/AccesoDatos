@@ -3,12 +3,23 @@ package vista;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import model.Jugador;
+import repository.JugadorRepository;
+
+import javax.swing.JSpinner;
+import java.awt.Choice;
+import javax.swing.JComboBox;
 
 public class JugadorFrame extends JFrame {
 
@@ -70,6 +81,24 @@ public class JugadorFrame extends JFrame {
 		});
 		menuBar.add(JugadorMenu);
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JComboBox<Jugador> comboBox = new JComboBox<Jugador>();
+		JugadorRepository _repository = new JugadorRepository();
+		List<Jugador> listaJugadores = _repository.getJugadores();
+		for (Jugador jugador : listaJugadores) {
+			comboBox.addItem(jugador);
+		}
+		comboBox.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				Jugador j = (Jugador) comboBox.getSelectedItem();
+				JOptionPane.showMessageDialog(null, j);
+			}
+		});
+		comboBox.setBounds(95, 10, 219, 22);
+		contentPane.add(comboBox);
 	}
 
 }

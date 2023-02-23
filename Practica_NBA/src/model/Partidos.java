@@ -6,6 +6,10 @@ package model;
  */
 public class Partidos implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer codigo;
 	private Equipo equipoByEquipoVisitante;
 	private Equipo equipoByEquipoLocal;

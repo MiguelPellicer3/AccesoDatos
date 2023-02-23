@@ -22,22 +22,22 @@ public class EquipoRepository {
 		return e;
 	}
 	
-	public int createEquipo(Equipo e) {
+	public boolean createEquipo(Equipo e) {
 		SessionFactory sesionFactory =HibernateSession.getSessionFactory();
 		Session sesion= sesionFactory.openSession();
 		Transaction tx = sesion.beginTransaction();
 		try {
 			sesion.save(e);
 			tx.commit();
-			System.out.println("Departamento insertado");
-			return 1;
+			System.out.println("Equipo insertado");
+			return true;
 		}catch (ConstraintViolationException cve) {
 			System.out.println("Registro duplicado");
-			return 2;
+			return false;
 		}catch(Exception ex) {
 			ex.printStackTrace();
 			System.out.println("Problemas al guardar:" + ex.getMessage());
-			return 3;
+			return false;
 		}
 	}
 	
@@ -46,7 +46,7 @@ public class EquipoRepository {
 		Session sesion= sesionFactory.openSession();
 		
 		Query q = sesion.createQuery("delete Equipo e where e.nombre = :nombre");
-		q.setString("dptoNo", nombre);
+		q.setString("nombre", nombre);
 		int filas = q.executeUpdate();
 		
 		sesion.close();

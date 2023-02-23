@@ -101,4 +101,10 @@ public class Jugador implements java.io.Serializable {
 		this.estadisticas = estadisticas;
 	}
 
+	@Override
+	public String toString() {
+		return "Jugador [codigo=" + codigo + ", nombre=" + nombre + "]";
+	}
+
+	
 }
