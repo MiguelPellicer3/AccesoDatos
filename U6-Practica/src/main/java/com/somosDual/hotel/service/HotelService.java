@@ -1,62 +1,28 @@
 package com.somosDual.hotel.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.List;
 
 import com.somosDual.hotel.domain.Habitacion;
 import com.somosDual.hotel.domain.Hotel;
-import com.somosDual.hotel.reposotiry.IHabitacionRepository;
-import com.somosDual.hotel.reposotiry.IHotelRepository;
 
-import java.util.List;
+public interface HotelService {
 
-@Service
-public class HotelService implements IHotelService {
+	List<Hotel> buscarHotelesPorLocalidadYCategoria(String localidad, String categoria);
 
-	private final IHotelRepository hotelRepository;
-    private final IHabitacionRepository habitacionRepository;
+	List<Habitacion> buscarHabitacionesPorTamañoYPrecio(int tamaño, double precioMin, double precioMax);
 
-    @Autowired
-    public HotelService(IHotelRepository hotelRepository, IHabitacionRepository habitacionRepository) {
-        this.hotelRepository = hotelRepository;
-        this.habitacionRepository = habitacionRepository;
-    }
+	Hotel registrarNuevoHotel(Hotel hotel);
 
+	Habitacion registrarNuevaHabitación(Habitacion habitación);
 
-    @Override
-    public List<Hotel> buscarHotelesPorLocalidadYCategoría(String localidad, String categoría) {
-        return hotelRepository.findByLocalidadAndCategoria(localidad, categoría);
-    }
+	void eliminarHabitación(Habitacion habitación);
 
-    @Override
-    public List<Habitacion> buscarHabitacionesPorTamañoYPrecio(int tamaño, double precioMin, double precioMax) {
-        return habitacionRepository.findByTamanyoAndPrecioBetweenAndLibreIsTrue(tamaño, precioMin, precioMax);
-    }
+	void marcarHabitaciónComoOcupada(Habitacion habitación);
 
-    @Override
-    public void registrarNuevoHotel(Hotel hotel) {
-        hotelRepository.save(hotel);
-    }
+	void marcarHabitaciónComoNoOcupada(Habitacion habitación);
 
-    @Override
-    public void registrarNuevaHabitación(Habitacion habitación) {
-        habitacionRepository.save(habitación);
-    }
+	Habitacion habitacionByid(long id);
 
-    @Override
-    public void eliminarHabitación(Habitacion habitación) {
-        habitacionRepository.delete(habitación);
-    }
+	Hotel hotelByid(long id);
 
-    @Override
-    public void marcarHabitaciónComoOcupada(Habitacion habitación) {
-        habitación.setOcupada(true);
-        habitacionRepository.save(habitación);
-    }
-    
-    @Override
-    public void marcarHabitaciónComoNoOcupada(Habitacion habitación) {
-        habitación.setOcupada(false);
-        habitacionRepository.save(habitación);
-    }
 }

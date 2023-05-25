@@ -1,5 +1,7 @@
 package com.somosDual.hotel.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +34,7 @@ public class Habitacion {
 	private boolean ocupada;
 	@ManyToOne
 	@JoinColumn(name = "hotel_id")
+	@JsonIgnoreProperties("habitaciones")
 	private Hotel hotel;
 
 }

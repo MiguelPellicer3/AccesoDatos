@@ -3,6 +3,8 @@ package com.somosDual.hotel.domain;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,13 +27,14 @@ public class Hotel {
 	@Column
 	private String nombre;
 	@Column
-	private String descripción;
+	private String descripcion;
 	@Column
 	private String categoria;
 	@Column
 	private boolean piscina;
 	@Column
 	private String localidad;
+	@JsonIgnoreProperties("hotel")
 	@OneToMany(mappedBy = "hotel")
 	private List<Habitacion> habitaciones;
 

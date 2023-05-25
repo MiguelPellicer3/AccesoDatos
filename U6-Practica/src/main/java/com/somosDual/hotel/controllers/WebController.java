@@ -3,6 +3,8 @@ package com.somosDual.hotel.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,53 +16,70 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.somosDual.hotel.domain.Habitacion;
 import com.somosDual.hotel.domain.Hotel;
-import com.somosDual.hotel.service.IHotelService;
+import com.somosDual.hotel.service.HotelService;
+
 
 @Controller
 public class WebController {
 	
 	@Autowired
-	private IHotelService hotelService;
+	private HotelService hotelService;
 
+    public WebController(HotelService hotelService) {
+		super();
+		this.hotelService = hotelService;
+	}
 
-    @GetMapping("/buscar")
-    public List<Hotel> buscarHotelesPorLocalidadYCategoría(@RequestParam String localidad, @RequestParam String categoría) {
-        return hotelService.buscarHotelesPorLocalidadYCategoría(localidad, categoría);
+	@GetMapping("/hoteles")
+    public ResponseEntity<List<Hotel>> buscarHotelesPorLocalidadYCategoría(@RequestParam("localidad") String localidad, @RequestParam("categoria") String categoria) {
+        List<Hotel> hoteles = hotelService.buscarHotelesPorLocalidadYCategoria(localidad, categoria);
+		return new ResponseEntity<List<Hotel>>(hoteles, HttpStatus.OK);
     }
 
-    @GetMapping("/habitaciones/buscar")
-    public List<Habitacion> buscarHabitacionesPorTamañoYPrecio(@RequestParam int tamaño, @RequestParam double precioMin, @RequestParam double precioMax) {
-        return hotelService.buscarHabitacionesPorTamañoYPrecio(tamaño, precioMin, precioMax);
+    @GetMapping("/habitaciones")
+    public ResponseEntity<List<Habitacion>> buscarHabitacionesPorTamañoYPrecio(@RequestParam("tamanyo") int tamaño, @RequestParam("precioMin") double precioMin, @RequestParam("precioMax") double precioMax) {
+        List<Habitacion> habitaciones = hotelService.buscarHabitacionesPorTamañoYPrecio(tamaño, precioMin, precioMax);
+    	return new ResponseEntity<List<Habitacion>>(habitaciones, HttpStatus.OK);
     }
 
-    @PostMapping("/registrar")
-    public void registrarNuevoHotel(@RequestBody Hotel hotel) {
-        hotelService.registrarNuevoHotel(hotel);
+    @PostMapping("/hoteles")
+    public ResponseEntity<Hotel> registrarNuevoHotel(@RequestBody Hotel hotel) {
+    	return new ResponseEntity<Hotel>( hotelService.registrarNuevoHotel(hotel),HttpStatus.CREATED);
     }
 
-    @PostMapping("/habitaciones/registrar")
-    public void registrarNuevaHabitación(@RequestBody Habitacion habitación) {
-        hotelService.registrarNuevaHabitación(habitación);
+    @PostMapping("/habitaciones")
+    public ResponseEntity<Habitacion> registrarNuevaHabitación(@RequestBody Habitacion habitación) {
+    	return new ResponseEntity<Habitacion>( hotelService.registrarNuevaHabitación(habitación),HttpStatus.CREATED);
+        
     }
 
     @DeleteMapping("/habitaciones/{id}")
-    public void eliminarHabitación(@PathVariable long id) {
-        Habitacion habitación = new Habitacion();
-        habitación.setId(id);
+    public ResponseEntity<Habitacion> eliminarHabitación(@PathVariable long id) {
+        Habitacion habitación = hotelService.habitacionByid(id);
+        if(habitación == null) {
+        	return new ResponseEntity<Habitacion>(HttpStatus.NOT_FOUND);
+        }
         hotelService.eliminarHabitación(habitación);
+        return new ResponseEntity<Habitacion>(HttpStatus.OK);
     }
 
-    @PutMapping("/habitaciones/{id}/ocupada")
-    public void marcarHabitaciónComoOcupada(@PathVariable long id) {
-        Habitacion habitación = new Habitacion();
-        habitación.setId(id);
+    @PutMapping("/habitaciones/marcarOcupada/{id}")
+    public ResponseEntity<Habitacion> marcarHabitaciónComoOcupada(@PathVariable long id) {
+        Habitacion habitación = hotelService.habitacionByid(id);
+        if(habitación == null) {
+        	return new ResponseEntity<Habitacion>(HttpStatus.NOT_FOUND);
+        }
         hotelService.marcarHabitaciónComoOcupada(habitación);
+        return new ResponseEntity<Habitacion>(HttpStatus.OK);
     }
     
-    @PutMapping("/habitaciones/{id}/desocupada")
-    public void marcarHabitaciónComoNOOcupada(@PathVariable long id) {
-        Habitacion habitación = new Habitacion();
-        habitación.setId(id);
+    @PutMapping("/habitaciones/marcarDesocupada/{id}")
+    public ResponseEntity<Habitacion> marcarHabitaciónComoNoOcupada(@PathVariable long id) {
+    	Habitacion habitación = hotelService.habitacionByid(id);
+        if(habitación == null) {
+        	return new ResponseEntity<Habitacion>(HttpStatus.NOT_FOUND);
+        }
         hotelService.marcarHabitaciónComoNoOcupada(habitación);
+        return new ResponseEntity<Habitacion>(HttpStatus.OK);
     }
 }
